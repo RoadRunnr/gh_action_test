@@ -20,8 +20,8 @@ jobs:
           # add git short SHA as Container tag
           tags: |
             type=ref,event=branch,suffix=-{{sha}}
-            type=semver,pattern=v{{version}}
-            type=pep440,pattern=v{{version}}
+            type=semver,pattern={{version}},prefix=v
+            type=pep440,pattern={{version}},prefix=v
           labels: |
             org.opencontainers.image.title=Title
             org.opencontainers.image.description=Description
