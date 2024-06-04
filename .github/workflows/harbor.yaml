@@ -1,0 +1,47 @@
+name: harbor
+
+on: [push, workflow_dispatch]
+
+jobs:
+  container-image:
+    name: Container Image
+    runs-on: ubuntu-22.04
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Container Metadata Number 1
+        id: container-meta
+        uses: docker/metadata-action@v5
+        with:
+          # list of container images to use as base name for tags
+          images: |
+            registry.example.com/test
+          # add git short SHA as Container tag
+          tags: |
+            type=ref,event=branch,suffix=-{{sha}}
+            type=semver,pattern=v{{version}}
+            type=pep440,pattern=v{{version}}
+          labels: |
+            org.opencontainers.image.title=Title
+            org.opencontainers.image.description=Description
+            org.opencontainers.image.vendor=Vendor
+
+      -
+        name: Container Metadata Number 1
+        id: container-meta
+        uses: docker/metadata-action@v5
+        with:
+          # list of container images to use as base name for tags
+          images: |
+            registry.example.com/test
+          # add git short SHA as Container tag
+          tags: |
+            type=ref,event=branch,suffix=-{{sha}}
+            type=semver,pattern={{version}}
+            type=pep440,pattern={{version}}
+          labels: |
+            org.opencontainers.image.title=Title
+            org.opencontainers.image.description=Description
+            org.opencontainers.image.vendor=Vendor
